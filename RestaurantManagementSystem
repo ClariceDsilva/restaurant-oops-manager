@@ -20,7 +20,7 @@ class RestaurantManagementSystem extends JFrame implements ActionListener {
         "French Fries - ₹60", 
         "Tea - ₹25", 
         "Coffee - ₹25", 
-        "Pepsi  - 45", 
+        "Pepsi - ₹45", 
         "Strawberry Milkshake - ₹55"
     };
 
@@ -33,20 +33,19 @@ class RestaurantManagementSystem extends JFrame implements ActionListener {
     public RestaurantManagementSystem() {
         // Create the title label
         title = new JLabel("Welcome to DELIGHT Restaurant", JLabel.CENTER);
-        title.setFont(new Font("Serif", Font.BOLD, 36));  // Larger text for title
+        title.setFont(new Font("Serif", Font.BOLD, 36));
         title.setForeground(Color.WHITE);
 
-        // Create buttons with larger text and background colors
+        // Create buttons with styles
         orderButton = new JButton("Place an Order");
         orderButton.setFont(new Font("Arial", Font.PLAIN, 24));
-        orderButton.setBackground(Color.BLUE);  // Changed to blue background
+        orderButton.setBackground(Color.BLUE);
         orderButton.setForeground(Color.WHITE);
 
         viewMenuButton = new JButton("View Menu");
-viewMenuButton.setFont(new Font("Arial", Font.PLAIN, 24));
-viewMenuButton.setBackground(new Color(128, 0, 128));  // Changed to purple background
-viewMenuButton.setForeground(Color.WHITE);  // Use white text for better contrast);  
-
+        viewMenuButton.setFont(new Font("Arial", Font.PLAIN, 24));
+        viewMenuButton.setBackground(new Color(128, 0, 128));
+        viewMenuButton.setForeground(Color.WHITE);
 
         exitButton = new JButton("Exit");
         exitButton.setFont(new Font("Arial", Font.PLAIN, 24));
@@ -68,10 +67,10 @@ viewMenuButton.setForeground(Color.WHITE);  // Use white text for better contras
 
         // Frame settings
         setTitle("Restaurant Management System");
-        setSize(600, 400);  // Larger size for better visibility
+        setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Center the frame
-        getContentPane().setBackground(Color.DARK_GRAY); // Set background color for the frame
+        setLocationRelativeTo(null);
+        getContentPane().setBackground(Color.DARK_GRAY);
         setVisible(true);
     }
     
@@ -82,38 +81,37 @@ viewMenuButton.setForeground(Color.WHITE);  // Use white text for better contras
         } else if (e.getSource() == viewMenuButton) {
             displayMenu();
         } else if (e.getSource() == exitButton) {
-            System.exit(0); // Exit the application
+            System.exit(0);
         }
     }
 
-    // Method to display the restaurant menu with colorful sections
+    // Method to display the restaurant menu
     public void displayMenu() {
         JPanel menuPanel = new JPanel();
-        menuPanel.setLayout(new GridLayout(items.length + 3, 1)); // +3 for the section headers
-        menuPanel.setBackground(Color.WHITE);  // Main panel background
+        menuPanel.setLayout(new GridLayout(items.length + 3, 1));
+        menuPanel.setBackground(Color.WHITE);
 
-        // Add colorful section headers and items
         JLabel mainDishSection = new JLabel("MAIN COURSE", JLabel.CENTER);
         mainDishSection.setFont(new Font("Arial", Font.BOLD, 26));
         mainDishSection.setForeground(Color.RED);
         menuPanel.add(mainDishSection);
 
-        for (int i = 0; i < 5; i++) {  // Main dish items (Biriyani, Paneer, Fried Rice, Cheese Burger)
+        for (int i = 0; i < 5; i++) {
             JLabel itemLabel = new JLabel(items[i], JLabel.CENTER);
             itemLabel.setFont(new Font("Arial", Font.PLAIN, 22));
-            itemLabel.setForeground(Color.RED);  // Set main dish section color to red
+            itemLabel.setForeground(Color.RED);
             menuPanel.add(itemLabel);
         }
 
         JLabel snacksSection = new JLabel("APPETIZERS", JLabel.CENTER);
         snacksSection.setFont(new Font("Arial", Font.BOLD, 26));
-        snacksSection.setForeground(new Color(128, 0, 128));  // Violet color
+        snacksSection.setForeground(new Color(128, 0, 128));
         menuPanel.add(snacksSection);
 
-        for (int i = 5; i < 9; i++) {  // Snacks items
+        for (int i = 5; i < 9; i++) {
             JLabel itemLabel = new JLabel(items[i], JLabel.CENTER);
             itemLabel.setFont(new Font("Arial", Font.PLAIN, 22));
-            itemLabel.setForeground(new Color(128, 0, 128));  // Set snacks section color to violet
+            itemLabel.setForeground(new Color(128, 0, 128));
             menuPanel.add(itemLabel);
         }
 
@@ -122,75 +120,83 @@ viewMenuButton.setForeground(Color.WHITE);  // Use white text for better contras
         drinksSection.setForeground(Color.BLUE);
         menuPanel.add(drinksSection);
 
-        for (int i = 9; i < items.length; i++) {  // Beverages items
+        for (int i = 9; i < items.length; i++) {
             JLabel itemLabel = new JLabel(items[i], JLabel.CENTER);
             itemLabel.setFont(new Font("Arial", Font.PLAIN, 22));
-            itemLabel.setForeground(Color.BLUE);  // Set beverages section color to blue
+            itemLabel.setForeground(Color.BLUE);
             menuPanel.add(itemLabel);
         }
 
-        // Display the colorful menu
         JScrollPane scrollPane = new JScrollPane(menuPanel);
         scrollPane.setBackground(Color.LIGHT_GRAY);
         JOptionPane.showMessageDialog(this, scrollPane, "Restaurant Menu", JOptionPane.PLAIN_MESSAGE);
     }
 
-    // Method to handle placing an order
+    // Method to handle placing an order with quantity input
     public void placeOrder() {
         int total = 0;
         StringBuilder orderSummary = new StringBuilder("Your Order:\n");
 
-        // Display checkboxes for each menu item
+        // Create checkboxes and quantity fields for each item
         JCheckBox[] checkboxes = new JCheckBox[items.length];
+        JTextField[] quantityFields = new JTextField[items.length]; // Text fields for quantity
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(items.length, 1));
-        panel.setBackground(Color.LIGHT_GRAY);  // Set background color for order panel
+        panel.setLayout(new GridLayout(items.length, 2));
+        panel.setBackground(Color.LIGHT_GRAY);
 
         for (int i = 0; i < items.length; i++) {
             checkboxes[i] = new JCheckBox(items[i]);
-            checkboxes[i].setFont(new Font("Arial", Font.PLAIN, 24));  // Larger text for checkboxes
+            checkboxes[i].setFont(new Font("Arial", Font.PLAIN, 24));
             checkboxes[i].setBackground(Color.LIGHT_GRAY);
             checkboxes[i].setForeground(Color.BLACK);
             panel.add(checkboxes[i]);
+
+            // Create a text field for quantity input, default is "1"
+            quantityFields[i] = new JTextField("1", 3);
+            quantityFields[i].setFont(new Font("Arial", Font.PLAIN, 24));
+            panel.add(quantityFields[i]);
         }
 
         // Show the panel in a dialog
-        int result = JOptionPane.showConfirmDialog(this, panel, "Select Items to Order", JOptionPane.OK_CANCEL_OPTION);
+        int result = JOptionPane.showConfirmDialog(this, panel, "Select Items and Quantities", JOptionPane.OK_CANCEL_OPTION);
 
         if (result == JOptionPane.OK_OPTION) {
             // Calculate total cost and prepare order summary
             for (int i = 0; i < items.length; i++) {
                 if (checkboxes[i].isSelected()) {
-                    orderSummary.append(items[i]).append("\n");
-                    total += prices[i];
+                    try {
+                        int quantity = Integer.parseInt(quantityFields[i].getText());
+                        int itemTotal = prices[i] * quantity;
+                        orderSummary.append(items[i]).append(" x ").append(quantity).append(" = ₹").append(itemTotal).append("\n");
+                        total += itemTotal;
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(this, "Please enter a valid quantity for " + items[i], "Invalid Quantity", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                 }
             }
 
             // Include the total in the order summary
             orderSummary.append("\nTotal: ₹").append(total);
 
-            // Create a JTextArea for the order summary with larger font
+            // Display order summary
             JTextArea textArea = new JTextArea(orderSummary.toString());
-            textArea.setFont(new Font("Arial", Font.PLAIN, 28));  // Larger font for order summary
-            textArea.setEditable(false); // Make the text area non-editable
+            textArea.setFont(new Font("Arial", Font.PLAIN, 28));
+            textArea.setEditable(false);
             textArea.setLineWrap(true);
             textArea.setWrapStyleWord(true);
             textArea.setBackground(Color.LIGHT_GRAY);
+            textArea.setPreferredSize(new Dimension(400, 200));
 
-            // Set preferred size for the JTextArea to make it wider
-            textArea.setPreferredSize(new Dimension(400, 200));  // Width and height
-
-            // Show the order summary in a dialog
             JOptionPane.showMessageDialog(this, new JScrollPane(textArea), "Order Summary", JOptionPane.INFORMATION_MESSAGE);
 
-            // Thank you statement with larger font and wider area
+            // Thank you message
             JTextArea thankYouArea = new JTextArea("Thank you! Visit again.");
-            thankYouArea.setFont(new Font("Arial", Font.BOLD, 32));  // Larger font for thank you message
+            thankYouArea.setFont(new Font("Arial", Font.BOLD, 32));
             thankYouArea.setEditable(false);
             thankYouArea.setBackground(Color.LIGHT_GRAY);
-            thankYouArea.setPreferredSize(new Dimension(500, 100));  // Wider area for thank you message
+            thankYouArea.setPreferredSize(new Dimension(500, 100));
 
-            // Show the thank you message in a dialog
             JOptionPane.showMessageDialog(this, new JScrollPane(thankYouArea), "Thank You!", JOptionPane.INFORMATION_MESSAGE);
         }
     }
